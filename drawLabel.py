@@ -5,7 +5,7 @@
 import numpy as np  
 import sys,os  
 import cv2
-from certifi import __main__
+#from certifi import __main__
 
 class KeyPoint(object):
     """docstring for KeyPoint"""
@@ -81,18 +81,38 @@ def drawWiderFile(filename):
     for line in lines:
         line=line.strip()
         components = line.split(' ')
-	savepath = 'drawImgs/'+components[0]+'.jpg'
-	src_img = cv2.imread(components[0]+'.jpg')
-	draw = src_img.copy()
-	for i in range(1,len(components),4):
-	    	plate_p1 = (int(float(components[i])), int(float(components[i+1])))
-		plate_p2 = (int(float(components[i+2])), int(float(components[i+3])))  
-		draw = cv2.rectangle(draw,plate_p1,plate_p2,(250,0,255),2) # 画粗定位的框
-	cv2.imwrite(savepath, draw)
+        savepath = 'drawImgs/'+components[0]+'.jpg'
+        src_img = cv2.imread(components[0]+'.jpg')
+        draw = src_img.copy()
+
+        for i in range(1,len(components),4):
+            plate_p1 = (int(float(components[i])), int(float(components[i+1])))
+            plate_p2 = (int(float(components[i+2])), int(float(components[i+3])))  
+            draw = cv2.rectangle(draw,plate_p1,plate_p2,(250,0,255),2) # 画粗定位的框
+        cv2.imwrite(savepath, draw)
+
+    
+def drawPlatesFile(filename):
+    with open(filename, 'r') as f:
+        lines=f.readlines()
+    kp_warp = KeyPoint()
+    for line in lines:
+        line=line.strip()
+        components = line.split(' ')
+        savepath = 'drawImgs/'+components[0]
+        src_img = cv2.imread(components[0])
+        draw = src_img.copy()
+
+        for i in range(1,len(components),4):
+            plate_p1 = (int(float(components[i])), int(float(components[i+1])))
+            plate_p2 = (int(float(components[i+2])), int(float(components[i+3])))  
+            draw = cv2.rectangle(draw,plate_p1,plate_p2,(250,0,255),2) # 画粗定位的框
+        cv2.imwrite(savepath, draw)
 
 if __name__ == '__main__':
     #testDraw()
     #testCarBB()
     #drawLabelFile('labelList.txt')
-    drawWiderFile('wider_face_train_10.txt')
+    #drawWiderFile('wider_face_train_10.txt')
+    drawPlatesFile('YueB_20190606112350_seg.txt')
 
