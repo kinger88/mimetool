@@ -1,0 +1,5 @@
+
+yuv2jpg:
+export LD_LIBRARY_PATH=/home/great/turbo/lib
+gcc test.c -o test -I/home/great/turbo/include -L/home/great/turbo/lib -ljpeg
+./test /home/great/project/python/20190625/ /home/great/project/python/classjpg/20190625
